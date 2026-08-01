@@ -6,10 +6,20 @@ A React (Vite + JavaScript) frontend for the existing **EasyNotes Spring Boot + 
 - React 19 + Vite
 - React Router (client-side routing)
 - Axios (HTTP calls to the backend)
-- Tailwind CSS v4 (styling)
+- Tailwind CSS v4 (styling, incl. class-based dark mode)
+- lucide-react (icons)
+
+## Features
+- Full CRUD for notes (create, view, edit, delete)
+- Backend-driven search (debounced), category filter, and sort (newest / oldest / title)
+- Server-side pagination
+- Pin/unpin notes (pinned notes always sort first)
+- Dark mode toggle (persisted in localStorage)
+- Loading skeletons, empty states, and error handling with retry
 
 ## Prerequisites
 - The Spring Boot backend already running on `http://localhost:8080`
+  (with the updated `Note.java`, `NoteRepository.java`, `NoteController.java`, and `CorsConfig.java`)
 - Node.js 18+ and npm
 
 ## Setup
@@ -26,9 +36,9 @@ to be reachable at `http://localhost:8080/api` (configured in `src/services/note
 
 ```
 src/
- ├── components/   # Reusable UI pieces (Navbar, NoteCard, NoteForm, Loader, ErrorMessage)
- ├── pages/         # One component per route (Home, CreateNote, EditNote, NoteDetail, NotFound)
+ ├── components/   # Navbar, NoteCard, NoteForm, Loader, ErrorMessage, SkeletonCard
+ ├── pages/         # Home, CreateNote, EditNote, NoteDetail, NotFound
  ├── services/      # Axios instance + API functions (noteService.js)
- ├── App.jsx        # Route table
+ ├── App.jsx        # Route table + dark mode state
  └── main.jsx       # Entry point, wraps App in BrowserRouter
 ```

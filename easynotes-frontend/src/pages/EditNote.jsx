@@ -27,7 +27,10 @@ function EditNote() {
   const handleUpdate = (updatedValues) => {
     setSubmitting(true);
     setError("");
-    updateNote(id, updatedValues)
+    // NoteForm only knows about title/content/category - `pinned` isn't part
+    // of this form's UI, so we carry over the note's existing pinned value
+    // to avoid silently un-pinning it on every edit.
+    updateNote(id, { ...updatedValues, pinned: note.pinned })
       .then(() => navigate(`/notes/${id}`))
       .catch(() => {
         setError("Could not update the note. Please try again.");
@@ -39,12 +42,12 @@ function EditNote() {
     <div className="max-w-xl mx-auto px-4 sm:px-6 py-8">
       <Link
         to="/"
-        className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-brand-600"
+        className="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400"
       >
         <ArrowLeft size={15} /> Back to notes
       </Link>
 
-      <h1 className="font-display text-2xl font-bold text-slate-800 mt-3 mb-6">
+      <h1 className="font-display text-2xl font-bold text-slate-800 dark:text-slate-100 mt-3 mb-6">
         Edit Note
       </h1>
 
@@ -53,14 +56,14 @@ function EditNote() {
       ) : error && !note ? (
         <ErrorMessage message={error} />
       ) : (
-        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-6 shadow-sm">
           {error && (
             <div className="mb-5">
               <ErrorMessage message={error} />
             </div>
           )}
           <NoteForm
-            initialValues={{ title: note.title, content: note.content }}
+            initialValues={{ title: note.title, content: note.content, category: note.category }}
             onSubmit={handleUpdate}
             submitLabel="Save Changes"
             submitting={submitting}

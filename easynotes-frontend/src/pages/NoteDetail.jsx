@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, Pencil, Trash2 } from "lucide-react";
-import { getNoteById, deleteNote } from "../services/noteService";
+import { ArrowLeft, Pencil, Pin, PinOff, Trash2 } from "lucide-react";
+import { getNoteById, deleteNote, togglePinNote } from "../services/noteService";
 import Loader from "../components/Loader";
 import ErrorMessage from "../components/ErrorMessage";
 
@@ -38,11 +38,17 @@ function NoteDetail() {
       .catch(() => setError("Could not delete the note. Please try again."));
   };
 
+  const handleTogglePin = () => {
+    togglePinNote(id)
+      .then((response) => setNote(response.data))
+      .catch(() => setError("Could not update the pin. Please try again."));
+  };
+
   return (
     <div className="max-w-xl mx-auto px-4 sm:px-6 py-8">
       <Link
         to="/"
-        className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-brand-600"
+        className="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400"
       >
         <ArrowLeft size={15} /> Back to notes
       </Link>
@@ -54,16 +60,36 @@ function NoteDetail() {
           <ErrorMessage message={error} />
         </div>
       ) : (
-        <div className="mt-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h1 className="font-display text-2xl font-bold text-slate-800 break-words">
-            {note.title}
-          </h1>
-          <p className="mt-1 text-xs text-slate-400">
+        <div className="mt-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-6 shadow-sm">
+          <div className="flex items-start justify-between gap-3">
+            <h1 className="font-display text-2xl font-bold text-slate-800 dark:text-slate-100 break-words">
+              {note.title}
+            </h1>
+            <button
+              onClick={handleTogglePin}
+              aria-label={note.pinned ? "Unpin note" : "Pin note"}
+              className={`shrink-0 rounded-md p-1.5 transition-colors ${
+                note.pinned
+                  ? "text-accent-600 dark:text-accent-500"
+                  : "text-slate-300 hover:text-accent-500 dark:text-slate-600 dark:hover:text-accent-500"
+              }`}
+            >
+              {note.pinned ? <Pin size={18} fill="currentColor" /> : <PinOff size={18} />}
+            </button>
+          </div>
+
+          {note.category && (
+            <span className="mt-2 inline-block rounded-full bg-brand-50 dark:bg-brand-500/10 px-2.5 py-0.5 text-xs font-medium text-brand-700 dark:text-brand-400">
+              {note.category}
+            </span>
+          )}
+
+          <p className="mt-3 text-xs text-slate-400 dark:text-slate-500">
             Created {formatDate(note.createdAt)} &middot; Updated{" "}
             {formatDate(note.updatedAt)}
           </p>
 
-          <p className="mt-5 text-sm leading-relaxed text-slate-700 whitespace-pre-line">
+          <p className="mt-5 text-sm leading-relaxed text-slate-700 dark:text-slate-300 whitespace-pre-line">
             {note.content}
           </p>
 
@@ -76,7 +102,7 @@ function NoteDetail() {
             </Link>
             <button
               onClick={handleDelete}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-rose-200 px-4 py-2 text-sm font-semibold text-rose-600 hover:bg-rose-50"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-rose-200 dark:border-rose-500/30 px-4 py-2 text-sm font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-500/10"
             >
               <Trash2 size={15} /> Delete
             </button>

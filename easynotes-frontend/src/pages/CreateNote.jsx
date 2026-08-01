@@ -27,12 +27,12 @@ function CreateNote() {
     <div className="max-w-xl mx-auto px-4 sm:px-6 py-8">
       <Link
         to="/"
-        className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-brand-600"
+        className="inline-flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400"
       >
         <ArrowLeft size={15} /> Back to notes
       </Link>
 
-      <h1 className="font-display text-2xl font-bold text-slate-800 mt-3 mb-6">
+      <h1 className="font-display text-2xl font-bold text-slate-800 dark:text-slate-100 mt-3 mb-6">
         Create a New Note
       </h1>
 
@@ -42,7 +42,7 @@ function CreateNote() {
         </div>
       )}
 
-      <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-6 shadow-sm">
         <NoteForm onSubmit={handleCreate} submitLabel="Create Note" submitting={submitting} />
       </div>
     </div>

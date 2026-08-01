@@ -1,6 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap");
 @import "tailwindcss";
 
+/* Tailwind v4 defaults to system dark-mode preference. This line switches it
+   to a manual toggle instead: dark: utilities apply whenever a `dark` class
+   is present on <html> (or an ancestor), which is what the Navbar toggle sets. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: "Inter", system-ui, sans-serif;
   --font-display: "Sora", "Inter", system-ui, sans-serif;
@@ -20,6 +25,11 @@
 body {
   font-family: var(--font-sans);
   background-color: #f8fafc; /* slate-50 */
+  transition: background-color 0.2s ease;
+}
+
+.dark body {
+  background-color: #0f172a; /* slate-900 */
 }
 
 .font-display {
