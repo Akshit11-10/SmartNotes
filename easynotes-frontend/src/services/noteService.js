@@ -37,7 +37,16 @@ export const updateNote = (id, note) => api.put(`/notes/${id}`, note);
 // without needing to resend the rest of the note's fields.
 export const togglePinNote = (id) => api.put(`/notes/${id}/pin`);
 
-// DELETE /api/notes/{id} -> deletes a note
+// GET /api/notes/trash -> paginated list of soft-deleted notes
+export const getTrash = (params = {}) => api.get("/notes/trash", { params });
+
+// PUT /api/notes/{id}/restore -> brings a note back out of the trash
+export const restoreNote = (id) => api.put(`/notes/${id}/restore`);
+
+// DELETE /api/notes/{id}/permanent -> actually removes the row (only used from the Trash page)
+export const permanentlyDeleteNote = (id) => api.delete(`/notes/${id}/permanent`);
+
+// DELETE /api/notes/{id} -> soft delete (the backend just flags it and moves it to the trash)
 export const deleteNote = (id) => api.delete(`/notes/${id}`);
 
 export default api;

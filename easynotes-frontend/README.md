@@ -14,6 +14,8 @@ A React (Vite + JavaScript) frontend for the existing **EasyNotes Spring Boot + 
 - Backend-driven search (debounced), category filter, and sort (newest / oldest / title)
 - Server-side pagination
 - Pin/unpin notes (pinned notes always sort first)
+- Soft delete + Trash (restore or permanently delete)
+- Download a note as a `.txt` file
 - Dark mode toggle (persisted in localStorage)
 - Loading skeletons, empty states, and error handling with retry
 
@@ -36,8 +38,8 @@ to be reachable at `http://localhost:8080/api` (configured in `src/services/note
 
 ```
 src/
- ├── components/   # Navbar, NoteCard, NoteForm, Loader, ErrorMessage, SkeletonCard
- ├── pages/         # Home, CreateNote, EditNote, NoteDetail, NotFound
+ ├── components/   # Navbar, NoteCard, TrashCard, NoteForm, Loader, ErrorMessage, SkeletonCard
+ ├── pages/         # Home, Trash, CreateNote, EditNote, NoteDetail, NotFound
  ├── services/      # Axios instance + API functions (noteService.js)
  ├── App.jsx        # Route table + dark mode state
  └── main.jsx       # Entry point, wraps App in BrowserRouter

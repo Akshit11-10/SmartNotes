@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, Pencil, Pin, PinOff, Trash2 } from "lucide-react";
+import { ArrowLeft, Download, Pencil, Pin, PinOff, Trash2 } from "lucide-react";
 import { getNoteById, deleteNote, togglePinNote } from "../services/noteService";
 import Loader from "../components/Loader";
 import ErrorMessage from "../components/ErrorMessage";
@@ -32,10 +32,26 @@ function NoteDetail() {
   }, [id]);
 
   const handleDelete = () => {
-    if (!window.confirm("Delete this note? This cannot be undone.")) return;
+    if (!window.confirm("Move this note to Trash? You can restore it later.")) return;
     deleteNote(id)
       .then(() => navigate("/"))
       .catch(() => setError("Could not delete the note. Please try again."));
+  };
+
+  // Client-side download - no backend involved. Builds a plain text file in
+  // memory (a Blob), creates a temporary object URL for it, and triggers a
+  // download via an invisible <a> tag - a standard browser-only pattern.
+  const handleDownload = () => {
+    const text = `${note.title}\n\n${note.content}`;
+    const blob = new Blob([text], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${note.title.trim().replace(/[^a-z0-9]+/gi, "-") || "note"}.txt`;
+    link.click();
+
+    URL.revokeObjectURL(url); // free the memory once the download has started
   };
 
   const handleTogglePin = () => {
@@ -100,6 +116,12 @@ function NoteDetail() {
             >
               <Pencil size={15} /> Edit
             </Link>
+            <button
+              onClick={handleDownload}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 dark:border-slate-600 px-4 py-2 text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700"
+            >
+              <Download size={15} /> Download
+            </button>
             <button
               onClick={handleDelete}
               className="inline-flex items-center gap-1.5 rounded-lg border border-rose-200 dark:border-rose-500/30 px-4 py-2 text-sm font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-500/10"

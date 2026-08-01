@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
+import Trash from "./pages/Trash";
 import CreateNote from "./pages/CreateNote";
 import EditNote from "./pages/EditNote";
 import NoteDetail from "./pages/NoteDetail";
@@ -33,6 +34,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/trash" element={<Trash />} />
           <Route path="/notes/new" element={<CreateNote />} />
           <Route path="/notes/:id" element={<NoteDetail />} />
           <Route path="/notes/:id/edit" element={<EditNote />} />

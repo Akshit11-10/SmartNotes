@@ -58,11 +58,16 @@ function Home() {
 
     getAllNotes({ page, size: PAGE_SIZE, sortBy, sortDir, query, category })
       .then((response) => {
-        setNotes(response.data.content);
-        setPageInfo({
-          totalPages: response.data.totalPages,
-          totalElements: response.data.totalElements,
-        });
+        // Defensive: if the backend hasn't been updated to return a paginated
+        // Page<Note> yet (still sending a plain array), fall back gracefully
+        // instead of crashing the whole page.
+        const data = response.data;
+        const content = Array.isArray(data) ? data : data?.content ?? [];
+        const totalPages = Array.isArray(data) ? 1 : data?.totalPages ?? 1;
+        const totalElements = Array.isArray(data) ? data.length : data?.totalElements ?? content.length;
+
+        setNotes(content);
+        setPageInfo({ totalPages, totalElements });
       })
       .catch(() =>
         setError("Could not load notes. Is the backend running on port 8080?")
@@ -76,7 +81,7 @@ function Home() {
   }, [page, query, category, sortOption]);
 
   const handleDelete = (id) => {
-    if (!window.confirm("Delete this note? This cannot be undone.")) return;
+    if (!window.confirm("Move this note to Trash? You can restore it later.")) return;
     deleteNote(id)
       .then(fetchNotes)
       .catch(() => setError("Could not delete the note. Please try again."));

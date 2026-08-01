@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import { Moon, NotebookPen, Plus, Sun } from "lucide-react";
+import { Moon, NotebookPen, Plus, Sun, Trash2 } from "lucide-react";
 
 // Top navigation bar shown on every page.
 // Uses NavLink so we can highlight whichever link matches the current route.
@@ -28,6 +28,11 @@ function Navbar({ darkMode, onToggleDarkMode }) {
         <div className="flex items-center gap-1">
           <NavLink to="/" end className={linkClasses}>
             All Notes
+          </NavLink>
+          <NavLink to="/trash" className={linkClasses}>
+            <span className="inline-flex items-center gap-1.5">
+              <Trash2 size={14} /> Trash
+            </span>
           </NavLink>
 
           <button
