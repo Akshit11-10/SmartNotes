@@ -36,6 +36,11 @@ function Home() {
   const [page, setPage] = useState(0);
   const [pageInfo, setPageInfo] = useState({ totalPages: 0, totalElements: 0 });
 
+  // A small polish touch: keep the browser tab title in sync with the page.
+  useEffect(() => {
+    document.title = "EasyNotes — Your Notes";
+  }, []);
+
   // Debounce: wait 400ms after the user stops typing before updating `query`.
   // Without this, every keystroke would fire a network request.
   useEffect(() => {

@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Compass } from "lucide-react";
 
 // Catch-all page for any route that doesn't match (see the "*" Route in App.jsx).
 function NotFound() {
+  useEffect(() => {
+    document.title = "404 — EasyNotes";
+  }, []);
+
   return (
     <div className="max-w-xl mx-auto px-4 sm:px-6 py-20 text-center">
       <Compass className="mx-auto text-slate-300 dark:text-slate-600" size={40} strokeWidth={1.5} />

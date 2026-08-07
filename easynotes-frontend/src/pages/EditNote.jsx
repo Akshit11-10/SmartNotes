@@ -18,6 +18,10 @@ function EditNote() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    document.title = "Edit Note — EasyNotes";
+  }, []);
+
+  useEffect(() => {
     getNoteById(id)
       .then((response) => setNote(response.data))
       .catch(() => setError("Note not found."))

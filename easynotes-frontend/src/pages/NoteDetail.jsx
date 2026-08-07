@@ -31,6 +31,15 @@ function NoteDetail() {
       .finally(() => setLoading(false));
   }, [id]);
 
+  // Once the note has loaded, show its title in the browser tab instead of a
+  // generic label. Resets on unmount so navigating away doesn't leave a stale title.
+  useEffect(() => {
+    document.title = note ? `${note.title} — EasyNotes` : "EasyNotes";
+    return () => {
+      document.title = "EasyNotes";
+    };
+  }, [note]);
+
   const handleDelete = () => {
     if (!window.confirm("Move this note to Trash? You can restore it later.")) return;
     deleteNote(id)

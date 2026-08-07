@@ -38,7 +38,7 @@ to be reachable at `http://localhost:8080/api` (configured in `src/services/note
 
 ```
 src/
- ├── components/   # Navbar, NoteCard, TrashCard, NoteForm, Loader, ErrorMessage, SkeletonCard
+ ├── components/   # Navbar, Footer, ScrollToTop, NoteCard, TrashCard, NoteForm, Loader, ErrorMessage, SkeletonCard
  ├── pages/         # Home, Trash, CreateNote, EditNote, NoteDetail, NotFound
  ├── services/      # Axios instance + API functions (noteService.js)
  ├── App.jsx        # Route table + dark mode state

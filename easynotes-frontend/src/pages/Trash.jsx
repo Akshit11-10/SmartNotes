@@ -18,6 +18,10 @@ function Trash() {
   const [page, setPage] = useState(0);
   const [pageInfo, setPageInfo] = useState({ totalPages: 0, totalElements: 0 });
 
+  useEffect(() => {
+    document.title = "Trash — EasyNotes";
+  }, []);
+
   const fetchTrash = () => {
     setLoading(true);
     setError("");

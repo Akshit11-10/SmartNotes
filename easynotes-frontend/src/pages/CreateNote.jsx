@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { createNote } from "../services/noteService";
@@ -11,6 +11,10 @@ function CreateNote() {
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    document.title = "New Note — EasyNotes";
+  }, []);
 
   const handleCreate = (note) => {
     setSubmitting(true);
