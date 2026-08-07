@@ -1,0 +1,6 @@
+@echo off
+echo Building project...
+call mvnw.cmd clean package -DskipTests
+echo Starting server...
+java -jar target\easy-notes-1.0.0.jar
+pause
