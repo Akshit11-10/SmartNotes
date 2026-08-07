@@ -1,4 +1,3 @@
-# Build stage
 FROM maven:3.8.8-eclipse-temurin-17 AS build
 
 WORKDIR /app
@@ -6,9 +5,8 @@ WORKDIR /app
 COPY . .
 
 RUN chmod +x mvnw
-RUN ./mvnw clean package -DskipTests
+RUN unset MAVEN_CONFIG && ./mvnw clean package -DskipTests
 
-# Run stage
 FROM eclipse-temurin:17-jre
 
 WORKDIR /app
