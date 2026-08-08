@@ -2,8 +2,7 @@ import axios from "axios";
 
 // Base URL of the Spring Boot backend.
 // The backend exposes all note endpoints under /api (see NoteController.java).
-const BASE_URL = "http://localhost:8080/api";
-
+const BASE_URL = "https://smartnotes-ehke.onrender.com/api";
 // A single Axios instance shared by every API call in this app.
 // Centralizing it here means if the backend URL ever changes,
 // we only update it in one place.
